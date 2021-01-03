@@ -41,18 +41,21 @@ func attackerRun(wg *sync.WaitGroup) {
 	max := MaxX - 2
 	
 	for missilesLeft > 0 {
-		column := rand.Intn(max - min) + min
-		spd    := rand.Intn(5) + 1
-		newMissile := missile{X: column, Y: MaxY - 1, speed: spd, curr: 0}
-		
-		attackerWG.Add(1)
-		go missileRun(newMissile, &attackerWG)
-
-		missilesLeft--
-		activeMissiles++
-
 		n := time.Duration(rand.Intn(2) + 1)
-		time.Sleep(n * time.Second)
+		select{
+		case <- done:
+			return
+		case <- time.After(n * time.Second):
+			column := rand.Intn(max - min) + min
+			spd    := rand.Intn(5) + 1
+			newMissile := missile{X: column, Y: MaxY - 1, speed: spd, curr: 0}
+			
+			attackerWG.Add(1)
+			go missileRun(newMissile, &attackerWG)
+	
+			missilesLeft--
+			activeMissiles++
+		}
 	}
 }
 
