@@ -2,7 +2,7 @@
 Abraham Lincoln
 Stephen Douglass
 # max missiles >= 0. 0 means an infinite missile battle.
-0
+3
 # cityscape: next comment line is for human convenience
 # 1 2 3 4 5 6 7 8 9 # each row is 10 characters of layout specification
 2 2 2 2 2 2 2 2 2 2
